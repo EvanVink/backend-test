@@ -6,7 +6,10 @@ app = FastAPI()
 # CORS MUST BE RIGHT AFTER app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://aesthetic-maamoul-6110a0.netlify.app/"],   # allow everything
+    allow_origins=[
+        "https://aesthetic-maamoul-6110a0.netlify.app",
+        "https://backend-test-omwp.onrender.com"
+        ],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -33,6 +33,15 @@ def get_clip():
         processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch16")
     return model, processor
 
+
+@app.get("/")
+def home():
+    return {"status":"ok"}
+
+@app.options("/api")
+def options_api():
+    return {}
+
 @app.post("/api")
 def classify_image(img_base64: str = Body()):
     model, processor = get_clip()  # lazy load here

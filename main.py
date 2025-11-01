@@ -1,32 +1,36 @@
 from fastapi import FastAPI, Body
 from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+# CORS MUST BE RIGHT AFTER app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],   # allow everything
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# NOW import heavy modules
 from PIL import Image
 import base64, io
 import torch
 from transformers import CLIPProcessor, CLIPModel
 
-app = FastAPI()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 # GLOBALS (empty)
 model = None
 processor = None
 
 # your labels
-labels = ["rose","sunflower","tulip","daisy","lily","orchid","dandelion","poppy"]
+labels = ["granite", "basalt", "limestone", "sandstone", "obsidian", "marble", "slate", "gneiss"]
 
 def get_clip():
     global model, processor
     if model is None:
-        model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
-        processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+        model = CLIPModel.from_pretrained("openai/clip-vit-base-patch16")
+        processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch16")
     return model, processor
 
 @app.post("/api")

@@ -38,10 +38,6 @@ def get_clip():
 def home():
     return {"status":"ok"}
 
-@app.options("/api")
-def options_api():
-    return {}
-
 @app.post("/api")
 def classify_image(img_base64: str = Body()):
     model, processor = get_clip()  # lazy load here
